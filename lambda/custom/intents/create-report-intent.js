@@ -16,7 +16,7 @@ module.exports = {
 
     return handlerInput.responseBuilder
       .speak(response)
-      // .withSimpleCard('Hello World', speechText)
+      .withShouldEndSession(false)
       .getResponse();
   },
   createResponse(input) {
