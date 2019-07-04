@@ -9,9 +9,15 @@ const LaunchRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
-  handle(handlerInput) {
+  async handle(handlerInput) {
     const speechText = 'らくらく家計簿へようこそ。食費を1000円追加して、のように話しかけてください!';
 
+    const attrs = await handlerInput.attributesManager.getPersistentAttributes()
+    if (!attrs.incomeHistory) attrs.incomeHistory = []
+    if (!attrs.paymentHistory) attrs.paymentHistory = []
+    handlerInput.attributesManager.setPersistentAttributes(attrs);
+    await handlerInput.attributesManager.savePersistentAttributes();
+    
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)

@@ -1,4 +1,5 @@
 const moment = require('moment')
+const genre = require('../constants/genre')
 
 module.exports = {
   canHandle(handlerInput) {
@@ -16,7 +17,7 @@ module.exports = {
 
     return handlerInput.responseBuilder
       .speak(response)
-      .withShouldEndSession(false)
+      // .withShouldEndSession(false)
       .getResponse();
   },
   createResponse(input) {
