@@ -4,7 +4,11 @@ module.exports  = {
       && handlerInput.requestEnvelope.request.intent.name === 'RecordSpendingIntent';
   },
   handle(handlerInput) {
-    const speechText = 'Hello World!';
+    const persistenceAdapter = require('ask-sdk-s3-persistence-adapter');
+    const date = handlerInput.requestEnvelope.request.intent.slots.date.value;
+    const genre = handlerInput.requestEnvelope.request.intent.slots.genre.value;
+    const value = handlerInput.requestEnvelope.request.intent.slots.value.value;
+    const speechText = `${date}に${genre}で${value}円ですね。`;
 
     return handlerInput.responseBuilder
       .speak(speechText)
