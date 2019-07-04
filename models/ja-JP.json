@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "change me",
+            "invocationName": "らくらく家計簿",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
@@ -21,21 +21,107 @@
                 },
                 {
                     "name": "RecordSpendingIntent",
-                    "slots": [],
-                    "samples": []
+                    "slots": [
+                        {
+                            "name": "genre",
+                            "type": "genre"
+                        },
+                        {
+                            "name": "date",
+                            "type": "AMAZON.DATE"
+                        },
+                        {
+                            "name": "value",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "{date}  {value} 円 {genre} で使いました",
+                        "{date}  {genre} で {value} 円使いました"
+                    ]
                 },
                 {
                     "name": "CreateReportIntent",
-                    "slots": [],
-                    "samples": []
+                    "slots": [
+                        {
+                            "name": "date",
+                            "type": "AMAZON.DATE"
+                        },
+                        {
+                            "name": "graphType",
+                            "type": "graphType"
+                        }
+                    ],
+                    "samples": [
+                        "レポートを作って",
+                        "レポートを送って",
+                        "レポートをお願い",
+                        "{date} のレポートを送って",
+                        "{date} の {graphType} を送って",
+                        "{date} の {graphType} をお願い",
+                        "{date} の {graphType} を作って",
+                        "{date} のレポートを作って",
+                        "{date} のレポートをお願い"
+                    ]
                 },
                 {
                     "name": "ConfirmRecordIntent",
-                    "slots": [],
-                    "samples": []
+                    "slots": [
+                        {
+                            "name": "genre",
+                            "type": "genre"
+                        },
+                        {
+                            "name": "date",
+                            "type": "AMAZON.DATE"
+                        }
+                    ],
+                    "samples": [
+                        "{date} の {genre} は",
+                        "{genre}  をどうだった",
+                        "{date} の {genre} はどうだった",
+                        "{genre}  を知りたい",
+                        "{date} の {genre} が知りたい"
+                    ]
                 }
             ],
-            "types": []
+            "types": [
+                {
+                    "name": "genre",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "交通費"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "交際費"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "食費"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "graphType",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "円グラフ"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "棒グラフ"
+                            }
+                        }
+                    ]
+                }
+            ]
         }
     }
 }
