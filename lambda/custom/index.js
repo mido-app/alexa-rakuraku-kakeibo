@@ -1,7 +1,7 @@
-/* eslint-disable  func-names */
-/* eslint-disable  no-console */
-
 const Alexa = require('ask-sdk-core');
+const RecordSpendingIntentHandler = require('./intents/record-spending-intent');
+const ConfirmRecordIntentHandler = require('./intents/confirm-record-intent');
+const CreateReportIntentHandler = require('./intents/create-report-intent');
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -13,21 +13,6 @@ const LaunchRequestHandler = {
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
-      .withSimpleCard('Hello World', speechText)
-      .getResponse();
-  },
-};
-
-const HelloWorldIntentHandler = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'HelloWorldIntent';
-  },
-  handle(handlerInput) {
-    const speechText = 'Hello World!';
-
-    return handlerInput.responseBuilder
-      .speak(speechText)
       .withSimpleCard('Hello World', speechText)
       .getResponse();
   },
@@ -95,7 +80,9 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
-    HelloWorldIntentHandler,
+    RecordSpendingIntentHandler,
+    ConfirmRecordIntentHandler,
+    CreateReportIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
     SessionEndedRequestHandler

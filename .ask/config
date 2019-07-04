@@ -35,11 +35,11 @@
       "merge": {},
       "resources": {
         "manifest": {
-          "eTag": "17ee773b87d9820cfa4ba3fcf11f998f"
+          "eTag": "520927088a4c2b0a574700085d7fff17"
         },
         "interactionModel": {
           "ja-JP": {
-            "eTag": "db22207102277eae113a36cccce6f32f"
+            "eTag": "32199d2007bc4b9209e1832a288b45c3"
           }
         },
         "lambda": [
@@ -52,7 +52,7 @@
             "codeUri": "lambda/custom",
             "functionName": "ask-custom-alexa-rakuraku-kakeibo-default",
             "handler": "index.handler",
-            "revisionId": "a95de1e9-d151-49e2-9e6b-080454e9a84a",
+            "revisionId": "acd7bc34-01a0-4798-ad6e-5f6bdc08dfd2",
             "runtime": "nodejs8.10"
           }
         ]
