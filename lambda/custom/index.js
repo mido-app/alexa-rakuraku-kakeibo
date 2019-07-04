@@ -1,4 +1,6 @@
 const Alexa = require('ask-sdk-core');
+const persistenceAdapter = require('ask-sdk-s3-persistence-adapter');
+
 const RecordSpendingIntentHandler = require('./intents/record-spending-intent');
 const ConfirmRecordIntentHandler = require('./intents/confirm-record-intent');
 const CreateReportIntentHandler = require('./intents/create-report-intent');
@@ -8,7 +10,7 @@ const LaunchRequestHandler = {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   handle(handlerInput) {
-    const speechText = 'Welcome to the Alexa Skills Kit, you can say hello!';
+    const speechText = 'らくらく家計簿へようこそ。食費を1000円追加して、のように話しかけてください!';
 
     return handlerInput.responseBuilder
       .speak(speechText)
@@ -88,4 +90,7 @@ exports.handler = skillBuilder
     SessionEndedRequestHandler
   )
   .addErrorHandlers(ErrorHandler)
+  .withPersistenceAdapter(
+    new persistenceAdapter.S3PersistenceAdapter(
+        {bucketName:process.env.S3_PERSISTENCE_BUCKET}))
   .lambda();
