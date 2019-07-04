@@ -15,6 +15,12 @@ module.exports = {
       graphType: graphType
     })
 
+    console.log(genre.getWordsByValue(1))
+    console.log(genre.getWordsByValue(2))
+    console.log(genre.getValueByWord('食費'))
+    console.log(genre.getValueByWord('交通費'))
+    console.log(genre.getWordsByValue('電車賃'))
+
     return handlerInput.responseBuilder
       .speak(response)
       // .withShouldEndSession(false)
