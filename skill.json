@@ -1,0 +1,29 @@
+{
+  "manifest": {
+    "publishingInformation": {
+      "locales": {
+        "ja-JP": {
+          "summary": "Alexaで簡単に家計簿をつけられるスキル",
+          "examplePhrases": [
+            "Coming soon..."
+          ],
+          "name": "alexa-rakuraku-kakeibo",
+          "description": "Alexaで簡単に家計簿をつけられるスキル。収支レポートをLineで受け取ることもできる"
+        }
+      },
+      "isAvailableWorldwide": false,
+      "testingInstructions": "Coming soon...",
+      "category": "KNOWLEDGE_AND_TRIVIA",
+      "distributionCountries": []
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "sourceDir": "lambda/custom",
+          "uri": "ask-custom-alexa-rakuraku-kakeibo-default"
+        }
+      }
+    },
+    "manifestVersion": "1.0"
+  }
+}
