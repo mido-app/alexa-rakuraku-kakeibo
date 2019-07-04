@@ -1,18 +1,43 @@
+const genre = require('../constants/genre')
+
 module.exports = {
+
     canHandle(handlerInput) {
-        console.log('test2')
         return handlerInput.requestEnvelope.request.type === 'IntentRequest'
             && handlerInput.requestEnvelope.request.intent.name === 'ConfirmRecordIntent';
     },
-    handle(handlerInput) {
-        //const amount = handlerInput.requestEnvelope.request.intent.slots.amount.value;
-        const genre = handlerInput.requestEnvelope.request.intent.slots.genre.value
-        const date = handlerInput.requestEnvelope.request.intent.slots.date.value
-        const speechText = `${genre}ですね。`;
-        console.log(genre)
+    async handle(handlerInput) {
+        const attr = await handlerInput.attributesManager.getPersistentAttributes();
+        const date = handlerInput.requestEnvelope.request.intent.slots.date.value;
+        const genre = handlerInput.requestEnvelope.request.intent.slots.genre.value;
+        console.log(`gernre:${genre}`)
+        // const amount = handlerInput.requestEnvelope.request.intent.slots.amount.value;
+        attr.incomeHistory.push({
+            date: '2019-07-01',
+            genre: 1,
+            amount: 1000
+        })
+        let amountSum = 0
+        console.log(`genre:${attr.paymentHistory.slice(-1)[0].genre}`)
+        for (var i = 0; i < attr.incomeHistory.length; i++) {
+            //対象データへのアクセスは data[i] の様な形式
+            if (attr.incomeHistory[i].genre === genre)//今言ったやつほしい
+                amountSum += attr.incomeHistory[i].amount
+            console.log(`amountSum:${amountSum}`)
+        }
+
+        // if (attr.value) {
+        //     speechText += `前回の ${attr.value}円に加算しますね。`;
+        // }
+        //attr.value = value;
+        //console.log(attr)
+        handlerInput.attributesManager.setPersistentAttributes(attr);
+        await handlerInput.attributesManager.savePersistentAttributes();
+
         const response = this.createResponse({
             date: date,
-            genre: genre
+            genre: genre,
+            amountSum: amountSum
         })
         return handlerInput.responseBuilder
             .speak(response)
@@ -20,6 +45,7 @@ module.exports = {
             .getResponse();
 
     },
+
     createResponse(input) {
         // バリデーション
         let errorResponse = null
@@ -35,6 +61,6 @@ module.exports = {
         }
 
         // おうむ返し
-        return `${input.date}のレポートを${input.genre}でLineに送信しました。`
+        return `${input.date}に${input.genre}で${input.amountSum}円ですね。`
     }
 };
