@@ -7,7 +7,7 @@
           "examplePhrases": [
             "Coming soon..."
           ],
-          "name": "alexa-rakuraku-kakeibo",
+          "name": "らくらく家計簿",
           "description": "Alexaで簡単に家計簿をつけられるスキル。収支レポートをLineで受け取ることもできる"
         }
       },

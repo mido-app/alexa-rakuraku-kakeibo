@@ -1,27 +1,64 @@
 {
   "interactionModel": {
-    "languageModel": {
-      "invocationName": "らくかけ",
-      "intents": [
-        {
-          "name": "AMAZON.CancelIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.HelpIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.StopIntent",
-          "samples": []
-        },
-        {
-          "name": "HelloWorldIntent",
-          "samples": [
-            "hello"
+      "languageModel": {
+          "invocationName": "らくかけ",
+          "intents": [
+              {
+                  "name": "AMAZON.CancelIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AMAZON.HelpIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AMAZON.StopIntent",
+                  "samples": []
+              },
+              {
+                  "name": "HelloWorldIntent",
+                  "slots": [
+                      {
+                          "name": "genre",
+                          "type": "GENRE"
+                      },
+                      {
+                          "name": "amount",
+                          "type": "AMAZON.NUMBER"
+                      }
+                  ],
+                  "samples": [
+                      "{genre} を {amount} 円追加して",
+                      "{genre} を {amount} 円登録して"
+                  ]
+              },
+              {
+                  "name": "AMAZON.NavigateHomeIntent",
+                  "samples": []
+              }
+          ],
+          "types": [
+              {
+                  "name": "GENRE",
+                  "values": [
+                      {
+                          "name": {
+                              "value": "交通費"
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "交際費"
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "食費"
+                          }
+                      }
+                  ]
+              }
           ]
-        }
-      ]
-    }
+      }
   }
 }

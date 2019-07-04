@@ -1,9 +1,62 @@
 {
   "deploy_settings": {
     "default": {
-      "skill_id": "",
+      "skill_id": "amzn1.ask.skill.0ae589db-f78c-4285-aa69-496b26c61eb3",
       "was_cloned": false,
-      "merge": {}
+      "merge": {},
+      "resources": {
+        "manifest": {
+          "eTag": "d09043fa89d3b75169a1f4f797f5a46d"
+        },
+        "interactionModel": {
+          "ja-JP": {
+            "eTag": "db22207102277eae113a36cccce6f32f"
+          }
+        },
+        "lambda": [
+          {
+            "alexaUsage": [
+              "custom/default"
+            ],
+            "arn": "arn:aws:lambda:us-east-1:677152517840:function:ask-custom-alexa-rakuraku-kakeibo-default",
+            "awsRegion": "us-east-1",
+            "codeUri": "lambda/custom",
+            "functionName": "ask-custom-alexa-rakuraku-kakeibo-default",
+            "handler": "index.handler",
+            "revisionId": "d695b968-c3be-4917-8844-4e0a3a56f24e",
+            "runtime": "nodejs8.10"
+          }
+        ]
+      }
+    },
+    "rakuraku_kakeibo": {
+      "skill_id": "amzn1.ask.skill.530a706e-a8db-4463-82c8-3e3736cd0c12",
+      "was_cloned": false,
+      "merge": {},
+      "resources": {
+        "manifest": {
+          "eTag": "17ee773b87d9820cfa4ba3fcf11f998f"
+        },
+        "interactionModel": {
+          "ja-JP": {
+            "eTag": "db22207102277eae113a36cccce6f32f"
+          }
+        },
+        "lambda": [
+          {
+            "alexaUsage": [
+              "custom/default"
+            ],
+            "arn": "arn:aws:lambda:us-east-1:299666055714:function:ask-custom-alexa-rakuraku-kakeibo-default",
+            "awsRegion": "us-east-1",
+            "codeUri": "lambda/custom",
+            "functionName": "ask-custom-alexa-rakuraku-kakeibo-default",
+            "handler": "index.handler",
+            "revisionId": "a95de1e9-d151-49e2-9e6b-080454e9a84a",
+            "runtime": "nodejs8.10"
+          }
+        ]
+      }
     }
   }
 }
