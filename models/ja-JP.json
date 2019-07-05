@@ -24,7 +24,13 @@
                     "slots": [
                         {
                             "name": "genre",
-                            "type": "genre"
+                            "type": "genre",
+                            "samples": [
+                                "{genre} で使った",
+                                "{genre} です",
+                                "{genre} で使いました",
+                                "{genre}"
+                            ]
                         },
                         {
                             "name": "date",
@@ -32,16 +38,24 @@
                         },
                         {
                             "name": "value",
-                            "type": "AMAZON.NUMBER"
+                            "type": "AMAZON.NUMBER",
+                            "samples": [
+                                "{value} だよ",
+                                "{value} です",
+                                "{value} 円だよ",
+                                "{value} 円です",
+                                "{value} 円",
+                                "{value}"
+                            ]
                         }
                     ],
                     "samples": [
-                        "{value} 円 {genre} で使いました。",
-                        "{value} 円 {genre} で使ったよ。",
-                        "{genre} で {value} 円使ったよ。",
-                        "{genre} で {value} 円使いました。",
-                        "{date}  {value} 円 {genre} で使いました",
-                        "{date}  {genre} で {value} 円使いました"
+                        "{genre} {value} 円",
+                        "{value} 円 {genre} で使いました",
+                        "{genre} で {value} 円使ったよ",
+                        "{genre} で {value} 円使いました",
+                        "{date} {genre} で {value} 円使ったよ",
+                        "{date} {genre} で {value} 円使いました"
                     ]
                 },
                 {
@@ -50,20 +64,17 @@
                         {
                             "name": "date",
                             "type": "AMAZON.DATE"
-                        },
-                        {
-                            "name": "graphType",
-                            "type": "graphType"
                         }
                     ],
                     "samples": [
+                        "{date} の家計簿をレポートにして",
+                        "{date} のレポート",
+                        "{date} のレポートが見たい",
+                        "{date} のレポーティングをお願い",
                         "レポートを作って",
                         "レポートを送って",
                         "レポートをお願い",
                         "{date} のレポートを送って",
-                        "{date} の {graphType} を送って",
-                        "{date} の {graphType} をお願い",
-                        "{date} の {graphType} を作って",
                         "{date} のレポートを作って",
                         "{date} のレポートをお願い"
                     ]
@@ -188,6 +199,38 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "RecordSpendingIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "genre",
+                            "type": "genre",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.495458751522.215123138055"
+                            }
+                        },
+                        {
+                            "name": "date",
+                            "type": "AMAZON.DATE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "value",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.495458751522.348925133514"
+                            }
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "ALWAYS"
@@ -208,6 +251,24 @@
                     {
                         "type": "PlainText",
                         "value": "いつの {genre} が知りたいですか"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.495458751522.215123138055",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "支出のジャンルはなんですか？"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.495458751522.348925133514",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "支出はいくらですか？"
                     }
                 ]
             }
