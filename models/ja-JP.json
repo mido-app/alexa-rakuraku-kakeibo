@@ -36,6 +36,10 @@
                         }
                     ],
                     "samples": [
+                        "{value} 円 {genre} で使いました。",
+                        "{value} 円 {genre} で使ったよ。",
+                        "{genre} で {value} 円使ったよ。",
+                        "{genre} で {value} 円使いました。",
                         "{date}  {value} 円 {genre} で使いました",
                         "{date}  {genre} で {value} 円使いました"
                     ]
@@ -84,7 +88,6 @@
                     ],
                     "samples": [
                         "{date} の {genre} を知りたい",
-                        "{date} の家計簿を知りたい",
                         "{date} の {genre} は",
                         "{genre}  をどうだった",
                         "{date} の {genre} はどうだった",
@@ -99,17 +102,45 @@
                     "values": [
                         {
                             "name": {
-                                "value": "交通費"
+                                "value": "水道・光熱費",
+                                "synonyms": [
+                                    "電気代",
+                                    "光熱費",
+                                    "水道費",
+                                    "水道代"
+                                ]
                             }
                         },
                         {
                             "name": {
-                                "value": "交際費"
+                                "value": "家賃"
                             }
                         },
                         {
                             "name": {
-                                "value": "食費"
+                                "value": "交通費",
+                                "synonyms": [
+                                    "タクシー代",
+                                    "バス代",
+                                    "電車賃"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "交際費",
+                                "synonyms": [
+                                    "飲み代"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "食費",
+                                "synonyms": [
+                                    "メシ代",
+                                    "ごはん代"
+                                ]
                             }
                         }
                     ]
