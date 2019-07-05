@@ -69,7 +69,10 @@
                     "slots": [
                         {
                             "name": "genre",
-                            "type": "genre"
+                            "type": "genre",
+                            "samples": [
+                                "{genre}"
+                            ]
                         },
                         {
                             "name": "date",
@@ -123,6 +126,34 @@
                     ]
                 }
             ]
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "ConfirmRecordIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "genre",
+                            "type": "genre",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": ""
+                            }
+                        },
+                        {
+                            "name": "date",
+                            "type": "AMAZON.DATE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
         }
     }
 }
