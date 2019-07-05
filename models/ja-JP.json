@@ -50,10 +50,12 @@
                         }
                     ],
                     "samples": [
-                        "{genre} {value} 円",
-                        "{value} 円 {genre} で使いました",
-                        "{genre} で {value} 円使ったよ",
-                        "{genre} で {value} 円使いました",
+                        "{date} {value} で {genre} 円使いました",
+                        "{date} {value} で {genre} 円使ったよ",
+                        "{date} に {genre} で {value} 円",
+                        "{date} に {value} 円 {genre} で使いました",
+                        "{date} に {genre} で {value} 円使ったよ",
+                        "{date} に {genre} で {value} 円使いました",
                         "{date} {genre} で {value} 円使ったよ",
                         "{date} {genre} で {value} 円使いました"
                     ]
@@ -63,7 +65,14 @@
                     "slots": [
                         {
                             "name": "date",
-                            "type": "AMAZON.DATE"
+                            "type": "AMAZON.DATE",
+                            "samples": [
+                                "{date} のレポートを送って",
+                                "{date} のレポートをください",
+                                "{date} のレポートが見たい",
+                                "{date} のレポートをお願い",
+                                "{date}"
+                            ]
                         }
                     ],
                     "samples": [
@@ -231,6 +240,22 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "CreateReportIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "date",
+                            "type": "AMAZON.DATE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.157738229726.1069341745559"
+                            }
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "ALWAYS"
@@ -269,6 +294,15 @@
                     {
                         "type": "PlainText",
                         "value": "支出はいくらですか？"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.157738229726.1069341745559",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "いつのレポートが見たいですか"
                     }
                 ]
             }
