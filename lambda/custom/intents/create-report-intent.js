@@ -5,6 +5,7 @@ const lineSetting = require('../line-setting')
 const ejs = require('ejs')
 const fs = require('fs')
 const path = require('path');
+const uuidv4 = require('uuid/v4')
 
 module.exports = {
   canHandle(handlerInput) {
@@ -47,29 +48,38 @@ module.exports = {
 
     // 何月のレポートが欲しいか求める
     const targetMonth = moment(input.date).format('YYYY-MM')
+    console.log(`target month: ${targetMonth}`)
 
     // 永続化セッションから対象の月の収入データを取得
-    let incomeHistory = attr.incomeHistory
+    let paymentHistory = attr.paymentHistory
       .map(history => ({
         month: moment(history.date).format('YYYY-MM'),
         genre: history.genre,
         amount: history.amount
       }))
       .filter(history => history.month === targetMonth)
+    console.dir(paymentHistory)
 
     // 集計
     let amountGroupByGenre = {}
-    incomeHistory.forEach(history => {
+    paymentHistory.forEach(history => {
       let genreValue = amountGroupByGenre[history.genre]
       if(!genreValue) genreValue = 0
       amountGroupByGenre[history.genre] = genreValue + history.amount
+      console.log(`date=${history.date}, genre=${history.genre}, amount=${history.amount}`)
     })
     console.log(amountGroupByGenre)
 
     // htmlを作る
     console.log(`path: ${path.resolve(__dirname, '../ejs/graph.ejs')}`)
     const template = fs.readFileSync(path.resolve(__dirname, '../ejs/graph.ejs'), {encoding: "utf-8"})
-    const html = ejs.render(template, {})
+    const data = {
+      data: JSON.stringify(Object.keys(amountGroupByGenre).map(key => amountGroupByGenre[key])),
+      backgroundColor: JSON.stringify(Object.keys(amountGroupByGenre).map(key => genre.getColorByValue(Number(key)))),
+      labels: JSON.stringify(Object.keys(amountGroupByGenre).map(key => genre.getWordsByValue(Number(key))[0]))
+    }
+    console.dir(data)
+    const html = ejs.render(template, data)
     console.log(html)
 
     // s3にファイルをあげてURL取得
@@ -87,19 +97,15 @@ module.exports = {
         to: lineSetting.lineUserId,
         messages: [
           {
-            type: 'text',
-            text: 'Hello, Line Bot!'
-          },
-          {
             type: 'template',
-            altText: '代替テキスト',
+            altText: `${moment(input.date).format('YYYY年MM月')}のレポートです`,
             template: {
               type: 'buttons',
               text: `${moment(input.date).format('YYYY年MM月')}のレポートです`,
               actions: [
                 {
                   type: 'uri',
-                  label: 'ラベル',
+                  label: 'タップしてレポートを表示',
                   uri: url
                 }
               ]
@@ -111,7 +117,7 @@ module.exports = {
     })
 
     // おうむ返し
-    const dateJP = moment(input.date).format('YYYY年MM月DD日')
+    const dateJP = moment(input.date).format('YYYY年MM月')
     return `${dateJP}のレポートを${input.graphType}でLineに送信しました。`
   },
   upload(htmlbody) {
@@ -129,7 +135,7 @@ module.exports = {
         s3.upload({
           ACL: 'public-read',
           Bucket: 'alexa-rakuraku-kakeibo-graph',
-          Key: 'sample.html',
+          Key: `report-${uuidv4()}.html`,
           Body: stream,
           ContentType: 'text/html'
         }, function (err, data) {
