@@ -103,7 +103,7 @@ module.exports = {
 
     // おうむ返し
     const dateJP = moment(input.date).format('YYYY年MM月')
-    return `${dateJP}のレポートを${input.graphType}でLineに送信しました。`
+    return `${dateJP}のレポートをLineに送信しました。`
   },
   upload(htmlbody) {
     return new Promise((resolve, reject) => {
