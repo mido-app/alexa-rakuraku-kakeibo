@@ -4,28 +4,26 @@ const request = require('request-promise')
 const lineSetting = require('../line-setting')
 const ejs = require('ejs')
 const fs = require('fs')
-const path = require('path');
+const path = require('path')
 const uuidv4 = require('uuid/v4')
 
 module.exports = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'CreateReportIntent';
+      && handlerInput.requestEnvelope.request.intent.name === 'CreateReportIntent'
   },
   async handle(handlerInput) {
-    let date = handlerInput.requestEnvelope.request.intent.slots.date.value;
-    let graphType = handlerInput.requestEnvelope.request.intent.slots.graphType.value;
+    let date = handlerInput.requestEnvelope.request.intent.slots.date.value
 
     let attr = await handlerInput.attributesManager.getPersistentAttributes()
     console.log(attr)
 
     const response = await this.createResponse({
-      date: date,
-      graphType: graphType
+      date: date
     }, attr)
 
     handlerInput.attributesManager.setPersistentAttributes(attr);
-    await handlerInput.attributesManager.savePersistentAttributes();
+    await handlerInput.attributesManager.savePersistentAttributes()
 
     return handlerInput.responseBuilder
       .speak(response)
@@ -33,19 +31,6 @@ module.exports = {
       .getResponse();
   },
   async createResponse(input, attr) {
-    // バリデーション
-    let errorResponse = null
-    if (!input.date) {
-      errorResponse = '何月のレポートが欲しいですか？'
-    } else if (!input.graphType) {
-      errorResponse = '円グラフと棒グラフ、どちらでレポートを作成しますか？'
-    }
-
-    // 指定されない場合はエラーメッセージを返却
-    if (errorResponse) {
-      return errorResponse
-    }
-
     // 何月のレポートが欲しいか求める
     const targetMonth = moment(input.date).format('YYYY-MM')
     console.log(`target month: ${targetMonth}`)
