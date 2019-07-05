@@ -38,16 +38,20 @@ module.exports = {
     // 永続化セッションから対象の月の収入データを取得
     let paymentHistory = attr.paymentHistory
       .map(history => ({
-        month: moment(history.date).format('YYYY-MM'),
+        date: history.date,
         genre: history.genre,
         amount: history.amount
       }))
-      .filter(history => history.month === targetMonth)
+      .filter(history => moment(history.date).format('YYYY-MM') === targetMonth)
     console.dir(paymentHistory)
 
-    // 集計
+    // ジャンル別集計
     let amountGroupByGenre = {}
-    paymentHistory.forEach(history => {
+    paymentHistory.map(history => ({
+      date: moment(history.date).format('YYYY-MM'),
+      genre: history.genre,
+      amount: history.amount
+    })).forEach(history => {
       let genreValue = amountGroupByGenre[history.genre]
       if(!genreValue) genreValue = 0
       amountGroupByGenre[history.genre] = genreValue + history.amount
@@ -55,13 +59,41 @@ module.exports = {
     })
     console.log(amountGroupByGenre)
 
+    // 日別集計
+    let amountGroupByDate = {}
+    paymentHistory.map(history => ({
+      date: moment(history.date).format('YYYY-MM-DD'),
+      genre: history.genre,
+      amount: history.amount
+    })).forEach(history => {
+      let dateValue = amountGroupByDate[history.date]
+      if(!dateValue) dateValue = 0
+      amountGroupByDate[history.date] = dateValue + history.amount
+    })
+
+    let indexDate = `${targetMonth}-01`
+    while(targetMonth === moment(indexDate).format('YYYY-MM')) {
+      console.log()
+      if (!amountGroupByDate[indexDate]) amountGroupByDate[indexDate] = 0
+      indexDate = moment(indexDate).add('day', 1).format('YYYY-MM-DD')
+    }
+    console.log(amountGroupByDate)
+
     // htmlを作る
     console.log(`path: ${path.resolve(__dirname, '../ejs/graph.ejs')}`)
     const template = fs.readFileSync(path.resolve(__dirname, '../ejs/graph.ejs'), {encoding: "utf-8"})
+    const sortedKey = Object.keys(amountGroupByDate).sort()
     const data = {
-      data: JSON.stringify(Object.keys(amountGroupByGenre).map(key => amountGroupByGenre[key])),
-      backgroundColor: JSON.stringify(Object.keys(amountGroupByGenre).map(key => genre.getColorByValue(Number(key)))),
-      labels: JSON.stringify(Object.keys(amountGroupByGenre).map(key => genre.getWordsByValue(Number(key))[0]))
+      doughnut: {
+        data: JSON.stringify(Object.keys(amountGroupByGenre).map(key => amountGroupByGenre[key])),
+        backgroundColor: JSON.stringify(Object.keys(amountGroupByGenre).map(key => genre.getColorByValue(Number(key)))),
+        labels: JSON.stringify(Object.keys(amountGroupByGenre).map(key => genre.getWordsByValue(Number(key))[0]))
+      },
+      bar: {
+        data: JSON.stringify(sortedKey.map(key => amountGroupByDate[key])),
+        backgroundColor: JSON.stringify(sortedKey.map(key => 'rgba(75, 192, 192, 0.2)')),
+        labels: JSON.stringify(sortedKey)
+      }
     }
     console.dir(data)
     const html = ejs.render(template, data)
