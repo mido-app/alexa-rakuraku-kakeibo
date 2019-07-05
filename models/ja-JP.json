@@ -69,14 +69,21 @@
                     "slots": [
                         {
                             "name": "genre",
-                            "type": "genre"
+                            "type": "genre",
+                            "samples": [
+                                "{genre}"
+                            ]
                         },
                         {
                             "name": "date",
-                            "type": "AMAZON.DATE"
+                            "type": "AMAZON.DATE",
+                            "samples": [
+                                "{date}"
+                            ]
                         }
                     ],
                     "samples": [
+                        "{date} の {genre} を知りたい",
                         "{date} の家計簿を知りたい",
                         "{date} の {genre} は",
                         "{genre}  をどうだった",
@@ -123,6 +130,56 @@
                     ]
                 }
             ]
-        }
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "ConfirmRecordIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "genre",
+                            "type": "genre",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1537749244728.1091206143965"
+                            }
+                        },
+                        {
+                            "name": "date",
+                            "type": "AMAZON.DATE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1537749244728.53398404145"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.1537749244728.1091206143965",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "どのジャンルが知りたいですか"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1537749244728.53398404145",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "いつの {genre} が知りたいですか"
+                    }
+                ]
+            }
+        ]
     }
 }
