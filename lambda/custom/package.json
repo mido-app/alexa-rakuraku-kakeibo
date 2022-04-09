@@ -14,7 +14,7 @@
     "ask-sdk-s3-persistence-adapter": "^2.0.0",
     "aws-sdk": "^2.488.0",
     "ejs": "^2.6.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "uuid": "^3.3.2"
